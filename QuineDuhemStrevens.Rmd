@@ -1,0 +1,159 @@
+---
+title: "QuineDuhem"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(papaja)
+```
+
+The relation of a proposed reform to the rational motivations of the individuals involved is important when considering whether one should attempt to implement the reform. If a proposed reform requires individuals to do things that are contrary to their motivations, implementing the reform will be difficult. Understanding the motivations of individual researchers requires consideration of the philosophy of science, human psychology, and the pragmatics of what norms can achieve. 
+
+
+We will first describe how researchers, proponents and skeptics, should react to a failed replication from the standpoint of rational belief updating. A proponent's dismissal of a null result need not be irrational bias; as we will explain, it may be a result of rational inference. In certain cases, rational inference simultaneously prescribes that as opposed to proponents, those who were initially skeptical of the effect should *not* blame specifics of the replication study for the failed replication. This difference in the appropriate reaction of proponents and skeptics, together with aspects of the psychology of beliefs, leads to an implication that the beliefs and comments of original authors *before* a replication study is done can provide unique information that is unavailable after the study is completed. Previous recommendations for how replication studies are done, and new ones, are then discussed.
+
+# Why proponents and skeptics should react differently
+
+The proper interpretation of replication failures has been debated by philosophers of science for decades. Bayesian confirmation theory is an application of the axioms of probability theory to scientific inference and motivates one answer [@strevens_notes_2017]. Bayesian confirmation theory implies that it is sometimes appropriate for different researchers to update their beliefs very differently after a replication failure. Specifically, a proponent who had a strong belief in the tested effect *should* (under certain assumptions) blame aspects of the replication experiment, what we will call auxiliary hypotheses, rather than downgrading significantly their belief in the central hypothesis. In contrast, a skeptic, after the very same replication experiment, should downgrade their belief in the central hypothesis more. Readers who accept this can optionally skip to "Different researchers should not be expected to agree" and still understand the main points.
+
+## The problem of interpreting replication results in classic philosophy of science
+
+In his 1954 book, *The aim and structure of physical theory*, P.M. Duhem argued that any one experiment can never succeed in providing a critical test of a scientific hypothesis [@duhem_aim_1954]. While the intention of an experiment may be to test a single hypothesis, the success of an experiment also depends on additional auxiliary hypotheses. For example, Newton's theory seemed unable to explain an aspect of Mercury's orbit. But rather than conclude that Newton's theory was wrong, the astronomer Le Verrier proposed the existence of an additional planet, "Vulcan", with a particular mass and orbit that would yield the observed properties of the orbit of Mercury. In Duhem's terminology, rather than considering the central hypothesis of Newton's theory to be true, Le Verrier instead downgraded his belief in an auxiliary hypothesis regarding the number of planets, postulating the existence of an additional planet. 
+
+On the basis of Duhem's analysis of the logic that accompanied such examples, Duhem concluded that any one experiment never isolates a single hypothesis [@duhem_aim_1954]. Scientific predictions rely on a whole web of hypotheses and assumptions, and any one experiment can never speak solely to a single hypothesis. Rather, experiments test a compound of multiple hypotheses. 
+
+## Replication failures and blaming auxiliary hypotheses
+
+What are the implications for interpreting the results of replication experiments? "Direct replication" experiments are typically designed to replicate a phenomenon or effect by hewing as closely as possible to the method of the original experiment. Unfortunately, however, a replication experiment's method always has differences from the original experiment. In the case of psychology experiments, typically the participants are drawn from a different population, the stimulus materials might be updated, and, perhaps, a software program may administer the experiment on a screen rather than on pencil-and-paper. Each of these differences has an associated auxiliary hypothesis that must be true if the data are to strongly disconfirm the existence of the effect. These auxiliary hypotheses are that the effect exists in the new population, that the effect exists with the new stimulus materials, and that the effect manifests when pencil and paper is not used. A large-scale or many-labs replication failure can provide strong disconfirming evidence, but what is disconfirmed is the *conjunction* of the targeted and auxiliary hypotheses. Any one of these hypotheses being false is sufficient to yield a replication failure. Manipulation checks may be included to show that one or more of the auxiliary hypotheses are true, but rarely or never can they show that all the auxiliary hypotheses are true.
+
+The philosopher W.V.O. Quine extended Duhem's assertion that experiments address only the conjunction of hypotheses. According to Quine, in the case of a failed experimental prediction, not only can the blame not be assigned to a single hypothesis of the conjunction involved, but also there is no principled way to apportion blame among the conjunction's hypotheses. In other words, we cannot know how much each part of the conjunction should be discredited - the targeted, central hypothesis, or one of the auxiliary hypotheses. This claim has become known as the Quine-Duhem thesis.
+
+The Quine-Duhem thesis has dire implications. According to it, the inevitable differences in methodology with the original experiment, no matter how minor, can be blamed for the replication failure as much as the central hypothesis targeted. 
+
+## A rational framework for downgrading belief
+
+The Quine-Duhem thesis may still be a live issue in the philosophy of science [@sep-scientific-underdetermination]. A potential solution to the problem was, however, proposed by @strevens_bayesian_2001, and the encompassing framework has been labeled Bayesian confirmation theory [@strevens_notes_2017; @gershman]. A researcher's strength of a belief in a hypothesis is represented as subjective probability of the hypothesis. These strengths can differ for a central hypothesis ($p(h)$) and an auxiliary hypothesis ($p(a)$).
+
+Bayes' rule allows one to calculate how one should update one's belief in something given certain data. As written below, Bayes' rule also captures Duhem's insight that data speak only to the compound of a central hypothesis and the auxiliary, $ha$.
+
+$$
+p(ha|d) = \frac{p(d|ha)}{p(d|ha)p(ha) + p(d|\neg(ha))p(\neg(ha))}p(ha)
+$$
+
+
+In words, the belief in the compound of the central hypothesis and the auxiliary is updated from its prior credibility $p(ha)$ by a factor that reflects the probability of the data if the compound is true, divided by the probability of the data across the whole universe of theories: both the compound, and not ($\neg$) the compound. In most presentations of Bayes' theorem the denominator is simply the probability of the data, $p(d)$; here it has been expanded.
+
+This expression of Bayes' rule provides no guidance on how to apportion blame between the central hypothesis and the auxiliary hypotheses. If the Quine-Duhem thesis were true, we would be stuck. But as @strevens_bayesian_2001 pointed out, the axioms of probability lead to a useful expansion of the above expression.
+
+In particular, if one assumes that the data falsify the compound of the central and auxiliary hypothesis ($p(d | ha) = 0$), then the probability of the central hypothesis given the data is $p( h \neg a | d)$. In other words, the experiment can falsify the compound, but the central hypothesis can still be true if the auxiliary hypothesis were false.
+ Bayes' rule tells us the subjective probability we should assign to this belief, as a result of the experiment, that the central hypothesis is true but the auxiliary is false:
+
+$$
+p(h\neg a | d) = \frac{ p( d | h \neg a) p(h \neg a ) }{ p(d) }
+$$
+
+In the context of a replication failure, one could still have a strong belief in the probability of the central hypothesis being true if
+the auxiliary being true yields the null result with high probability even though the central hypothesis is true ( $p(d | h \neg a)$ is high). For example, the auxiliary hypothesis could be that the effect we are interested in is also present with a particular difference in the task instructions relative to the original study.
+In the unfortunate event that the auxiliary is false, the term  $p(d | h \neg a)$ can be high and thus the numerator overall can also be high if the probability of the central hypothesis being true but the auxiliary being false 
+ ( $p(h \neg a)$ )
+ is not too low. Despite the replication failure, then, the belief in the central hypothesis may escape with only a bruising rather than a serious wound.
+
+# Different researchers should not be expected to agree
+
+While psychology has catalogued many instances where people appear to reason poorly under uncertainty, in at least some cases adults and even children can judge Bayesian posterior probabilities precisely [@sedlmeier_teaching_2001; @zhu_children_2006].
+
+As laid out in detail in the previous _[Why proponents and skeptics should react differently]_ section, if there is an auxiliary hypothesis that is critical for the success of the replication, a rational scientist will be left with a high degree of belief in the central hypothesis, despite the replication failure, if:
+
+1. The scientist had a strong prior belief in the central hypothesis.
+2. The scientist did not have a strong belief in the auxiliary hypothesis.
+
+If the original author holds to 1 and 2 but others do not, substantial disagreement regarding the implications of a replication failure is rational. A researcher who had, for whatever reasons, a strong prior belief in the central hypothesis, may remain that way, while another researcher will strongly downgrade the credibility of the central hypothesis. We will refer to the response of the original author to downgrade chiefly the auxiliary hypothesis as the phenomenon of *RADARF (Rational Auxiliary Downgrading After Replication Failure)*.
+
+But how big is this effect - how much might two researchers disagree in realistic scenarios regarding prior belief?
+
+The curves plotted in Figure 1 shed some light on this. @strevens_bayesian_2001 produced these curves by making some further assumptions for how belief in the central hypothesis should be updated. One assumption is that the data would not have occurred if the $ha$ compound were true ($p (d | ha) = 0$) but would definitely have occurred otherwise. This means that the data from the replication study are strong enough that the effect of interest is completely ruled out. This is nearly true for large-scale replication experiments that with high confidence statistically rule out the hypothesized effect size. <!--CHECK THAT THIS ENTAILS ALL THE OTHER WAYS THE ASSUMPTION IS DISCUSSED IN GERSHMAN-->
+
+A second assumption is that prior belief in the auxiliary alone, $p(a)$, is the same as prior belief in it assuming the central hypothesis is true ($p(h|a)$), which we think is justified because prior belief in the auxiliary and the central hypothesis are in most cases independent.
+
+$$
+p(h | d) = \frac{ 1 - p( a | h ) }{ 1 - p(a|h)p(h) } p(h)
+$$
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4.2, fig.width=4.2,  fig.cap = "How belief in a central hypothesis should be decreased after a replication failure. Specifically, the plots shows the ratio of posterior to prior probability of the central hypothesis h as a function of the prior probability of the auxiliary hypothesis a,  for three different priors for the central hypothesis. Adapted from Strevens (2001)." }
+
+expand.grid.df <- function(...) Reduce(function(...) merge(..., by=NULL), list(...))
+
+x<- data.frame(x = seq(0,1,0.01) )
+pH<- data.frame(ph = seq(0.5,0.9,0.2))
+                
+dg<-expand.grid.df( x, pH )
+
+#mutate to calculate the ratio
+library(dplyr)
+dg<- mutate(dg, updateFactor = (1-x)/(1-x*ph))
+
+
+library(ggplot2)
+source( file.path("notesCalcs","theme_apa.R") ) #for calcFitDataframes
+
+dg$ph <- factor(dg$ph)
+g<-ggplot(dg,aes(x=x,y=updateFactor,color=ph)) + geom_line() +theme_apa()
+
+g<-g +xlab(expression("p(a|h)"))
+library(latex2exp)
+#g + ylab( TeX('$\\alpha^\\beta$') )  
+g<-g + ylab(    TeX('$\\frac{p( h | d ) }{ p (h) }$')   )   #always have to add backslash within string to interpret backslash
+
+g<-g+ scale_color_discrete(guide=guide_legend(title="p(h)") )  #, legend.position=c(.1,.3), legend.background = element_rect())
+
+changedTheme<- theme_apa() + theme(legend.position=c(0.19,0.36), legend.box.background = element_rect(color="grey"))
+g<-g+ changedTheme
+
+#g<-g+ theme(legend.position=c(.1,.3), legend.background = element_rect())
+#Want to rotate y-axis label but that puts it at the top for some reason + theme(axis.title.y = element_text(angle=0))
+plot(g)
+```
+
+The vertical axis plots the change in belief in the central hypothesis that should result from the replication failure, as a ratio of appropriately updated belief ($p(h|d)$) over the prior belief ($p(h)$). Stronger prior belief in the auxiliary hypothesis (horizontal axis) leads to more discounting of the central hypothesis. Stronger prior belief in the central hypothesis, $p(h)$ acts in the opposite direction, protecting the central hypothesis from discounting - the blue curve is higher than the red and green curves. Notice that these two factors interact. If confidence in the auxiliary is very high, belief in the central hypothesis gets downgraded by a large amount.
+However, if belief in the auxiliary is moderate (e.g., 0.7) and prior belief in the central hypothesis is strong (.9, the blue curve), then belief in the central hypothesis does not drop much as a result of the new data.
+
+We believe that this latter scenario is reasonable for some replication studies. That is, some proponents will have a very strong belief in the central hypothesis, but not a particularly strong belief in the auxiliary. After all, in a typical large-scale replication scenario, the replication effort is undertaken because the central hypothesis of the original finding has been very influential, leading to many subsequent experiments, some of which have been published. The published record being unanimous in providing support for the central hypothesis can, possibly together with personal experience with the effect, lead a researcher to have a strong belief in the central hypothesis. Other researchers, who for whatever reasons have a larger estimate of the size of the null-result file drawer, may have weaker beliefs in the central hypothesis. 
+
+Unfortunately, the auxiliary hypotheses of an experiment in psychology tend to have less a priori support than that of other sciences  [@meehl_theoretical_1978]. As illustrated in the Figure, this boosts the number of situations in which it is appropriate to blame the auxiliary hypothesis more than the central hypothesis.
+
+<!--"The situation in which A is merely conjoined to T makes it hard for us social scientists to fulfill a Popperian falsifiability requirement - to state before the fact what would count as a strong falsifier" p.820 -->
+
+<!---
+## Example
+
+The replicator has one set of auxiliary hypotheses. Under the alternative auxiliary hypothesis that the participants didn't understand the question, the failed-replication outcome is highly probable even if the central hypothesis is true. 
+Under certain conditions, rationally the researcher should credit the alternative auxiliary hypothesis and should not downgrade the central hypothesis much.  For example, in the loss aversion case an alternative auxiliary hypothesis is that the participants did not understand the instructions. But is sparsity actually violated if there are lots of auxiliaries for which the likelihood of the data is close to 1 - in other words if there are lots of ways the experiment could fail?
+
+> In retrospect, the decision to use new, mostly untested procedures for a large replication project was foolish [@baumeister_misguided_2016], p.574
+
+-->
+
+# RADARF is not disastrous
+
+It is sobering that researchers not only do, but also sometimes *should* draw very differing conclusions from the findings of experiments. This slows the rate at which agreement can be reached. The disagreement may not go on forever, however - as evidence accumulates, the effect of having different priors dwindles [@bolstad_introduction_2017]. 
+
+One should also keep in mind that the practical consequences of such disagreement may not be dire. If one researcher blames an auxiliary hypothesis for a replication failure, well, sometimes a downgrading of belief in an auxiliary hypothesis is major progress, as the targeted hypothesis is not the only one of interest. And for certain auxiliaries, if the effect depends on *that* auxiliary hypothesis being true, some researchers will no longer consider the hypothesis important. For instance, an effect may be initially demonstrated in one American university's undergraduates and a replication experiment conducted on another American university's undergraduates.  The auxiliary hypothesis in this case is that the effect generalizes to undergraduates of the second university. If that auxiliary hypothesis is false (and something like this was suggested by @vohs_money_2015 to explain a failure to replicate money priming), then some researchers may lose interest, perhaps because they will then see other effects as more important. Specifically, they may decide to pursue effects thought to generalize more robustly across universities. Thus, here the auxiliary hypothesis being false has had the consequence that researchers will view other effects as being of much greater interest. This is an advance.  <!--The only thing is we need to know *which* auxiliary hypothesis is too blame.
+To know which auxiliary hypothesis may be to blame, it really helps if only a very few have probabilities substantially less than one. In that case, we learn little from the replication failure. In that case the replication effort arguably should not proceed.-->
+
+In other cases disconfirmation of an auxiliary hypothesis will not be as much of an advance, because the central hypothesis still holds interest. What should be done? In recent years, several researchers have published recommendations for what should be done after a replication failure.
+
+<!--
+## Data analysis
+We used `r cite_r("referencesInfo/r-references.bib")` for all our analyses.
+-->
+
+
+
+# References
+```{r create_r-references}
+r_refs(file = "referencesInfo/r-references.bib")
+```
