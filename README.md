@@ -1,0 +1,1 @@
+Making predictions [of Strevens](https://htmlpreview.github.io/?https://github.com/alexholcombe/QuineDuhemWu/blob/master/predictionsMakingForStudyDesign.html)
