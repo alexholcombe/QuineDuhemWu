@@ -1,0 +1,59 @@
+---
+title: "StrevensFigure1"
+author: "Alex Holcombe"
+date: "9/23/2017"
+output: html_document
+---
+
+## R Markdown
+
+$$ \frac{Q(h)}{P(h)} = \frac{ 1 - p( a | h ) }{ 1 - p( a | h ) p(h) }  $$
+
+Ratio of posterior to prior probability of the central hypothesis, which in Holcombe's terms is 
+probability of $$ \frac{p( h | d ) }{ p (h) } $$
+
+For R plotting, x = $$ p(a | h) $$ 
+and y = that update ratio.
+
+Now, create a dataframe with many different values of x and three values of p(h).
+
+
+
+
+```{r}
+expand.grid.df <- function(...) Reduce(function(...) merge(..., by=NULL), list(...))
+
+x<- data.frame(x = seq(0,1,0.01) )
+pH<- data.frame(ph = seq(0.5,0.9,0.2))
+                
+dg<-expand.grid.df( x, pH )
+
+#mutate to calculate the ratio
+library(dplyr)
+dg<- mutate(dg, updateFactor = (1-x)/(1-x*ph))
+
+```
+
+Plot the figure
+
+```{r pressure, echo=FALSE}
+library(ggplot2)
+source( file.path("theme_apa.R") ) #for calcFitDataframes
+
+dg$ph <- factor(dg$ph)
+g<-ggplot(dg,aes(x=x,y=updateFactor,color=ph)) + geom_line() +theme_apa()
+
+g<-g +xlab(expression("p(a|h)"))
+library(latex2exp)
+#g + ylab( TeX('$\\alpha^\\beta$') )  
+g<-g + ylab(    TeX('$\\frac{p( h | d ) }{ p (h) }$')   )   #always have to add backslash within string to interpret backslash
+
+g<-g+ scale_color_discrete(guide=guide_legend(title="p(h)") )  #, legend.position=c(.1,.3), legend.background = element_rect())
+
+changedTheme<- theme_apa() + theme(legend.position=c(0.17,0.36), legend.box.background = element_rect(color="grey"))
+g<-g+ changedTheme
+
+#g<-g+ theme(legend.position=c(.1,.3), legend.background = element_rect())
+#Want to rotate y-axis label but that puts it at the top for some reason + theme(axis.title.y = element_text(angle=0))
+plot(g)
+```

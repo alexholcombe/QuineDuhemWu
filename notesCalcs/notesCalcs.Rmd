@@ -1,0 +1,169 @@
+---
+title: "Notes, questions, calculations"
+author: 
+  - "Alex Holcombe"
+  - "maybe Samuel Gershman"
+date: "6/27/2017"
+output: github_document
+bibliography: referencesInfo/references.bib
+csl: referencesInfo/apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Understanding the Gershman/Strevens story
+
+Equations 2 and 3 have the same first addend.
+
+Equation 4 links to equation 2, p(h|d) = p(ha|d) + p(h~a|d) and also equation 3, p(a|d) = p(ha|d) + p(~ha|d)
+
+The full updatings equation for the two hypotheses, under the assumption that the data completely falsifies $ ha $ ( $ p(ha|d) = 0 $ )
+$$
+p(h|d) = \frac{p(d | h\neg a)  p(h\neg a)}{p(d| h \neg a) p(h \neg a) + p(d | \neg h a) p(\neg h a) + p(d | \neg h \neg a) p(\neg h \neg a)  }
+$$
+$$
+p(a|d) = \frac{p(d | a\neg h)  p(a\neg h)}{p(d| a \neg h) p(a \neg h) + p(d | \neg a h) p(\neg a h) + p(d | \neg a \neg h) p(\neg a \neg h)  }
+$$
+
+So if the data are likely under the auxiliary, the numerator for p(h|d) can be high for the replicator. 
+
+But they ignore the first term of each by assuming p(d|ha) is zero. The idea is that the conjunct of the main hypothesis with the auxiliary strongly predicts no null result (@strevens_bayesian_2001 p.517); what Gershman calls determinism?), which also leads to p(ha|d) = 0 I think.
+
+Still I don't understand why Gershman and Strevens assume the data has its impact on h solely through its falsification of the conjunct ha. The equation says that ``p(h~a|d)`` is also important. Maybe the idea is that if a is false, p(h|d) is going to be high, in other words the data then don't speak to the hypothesis, which intuitively makes a lot of sense. Therefore one must concentrate on ``P(h|~(ha))``. 
+Actually that's exactly what Strevens says to do on p.525, it's all about
+
+$ p(h| \neg(ha) ) $ to paraphrase him, how does the observation of the data impact on the probability of h in virtue of *and only in virtue of* falsifying ha?
+So on page 525 he ends up with the same equation and graph that Gershman concentrates on.
+
+In Figure 1, P(a|h) is referred to as "prior probability of the auxiliary hypothesis a". Why is h in there? Is it that belief in h affects belief in a?
+
+Equation 5 of Gershman is Strevens' last equation on p.525.
+
+* The simple principle of conditionalization is what Bayes' rule is talking about, because it is p(h|d), where the data are unquestionable. If the data instead have some probability of existing, Jeffreys conditionalization has to be used. Strevens has to use it when he is relaxing the assumption that the experiment decisively refutes ``ha`` and instead it merely raises or decreases the probability of ``ha``. 
+
+### Strevens on 
+
+"try harder? Not at all. The cost, in time and energy, of enumerating the various alternatives to h and a, and then of fishing up
+from the well of consciousness subjective probabilities for e given each of
+these different alternatives, clearly far outweighs the additional precision one
+might hope to gain in one's subjective probabilities for h and a. Trying
+harder, then, would be irrational: the scientist should stick with their initial
+estimate that the near zero probabilities are"
+
+"I conclude that it is both psychologically accurate to suppose that scientists
+will not, and in accordance with the canons of procedural rationality to hold
+that they ought not, go to the trouble of assigning extremely precise values to
+P(e|h~a) and P(e|~(ha)). Thus, in the kind of circumstances sketched above,
+we may assume, and think it reasonable, that scientists set a value for
+P(e|h~a) that is pretty much equal to P(e|~(ha))."
+
+### Alex questions
+
+* @gershman presents the graphed equations as depending on this assumption:
+
+$ p(d | ha ) = 0 $ but it's "1 for all other conjuncts". I think this means that all alternatives to the critical compound predict the null effect.
+
+but in the next paragraph he says "One strong assumption underlying this analysis is worth highlighting, namely that the likelihood of $ h \neg a$ is = 1. I haven't worked out whether that is entailed by the above assumption. *Is it?*
+Gershman describes it as "the *consistency assumption*, because it states that only auxiliary hypotheses that are highly consistent with the data will have non-zero probabilities". I don't follow that statement and the further mathematical implication he says, that $ p(a_k) $ = 1 if $ p(d | ha_k) = 1 $
+
+* @gershman refers to ``p(a|h)`` as the prior probability of a, unqualified, in the Figure caption. This is true if ``h`` and ``a`` are independent, which may often be true. Perhaps it is worth making that explicit, esp. because Strevens notes that ```The assumption of independence is used in this way by Dorling ([1979]) and @howson2006scientific to help simplify the standard Bayesian solution to the Quine-Duhem problem, but in fact it is entirely unwarranted. If, as is generally assumed in posing the Quine-Duhem problem, h and a have been part of the same research program for some time they will certainly not be independent. Suppose, for example, that h has been confirmed by many observations using a certain experimental apparatus and that a states that the apparatus functions as it is supposed to. The independence of h and a entails that P(hla) = P(h) = P(h|~a). Thus to assume that hand a are independent is to assume that one's probability for h would be unaffected by the discovery that the apparatus that has confirmed h so many times has been malfunctioning.```  *Thoughts on this*?
+
+* The sparsity assumption is that "only auxiliary hypotheses that are highly consistent with the data will have non-zero probabilities" but I don't understand how it "licenses us to discount all the auxiliary hypotheses that are inconsistent with the data". I think I see how this constraint concentrates the belief change onto a few auxiliaries, but why is this needed- what is the undesired potential result of not including it? I think this is some way to relax one of the assumptions of Strevens and still get the same result, but I think I need to have spelled out in a concrete example how this results in "remaining auxiliaries that may appear as though they are ad hoc".
+
+## Strevens lecture notes
+
+These finally explain the sparsity thing for me. So sciences where everything about the measurement apparatus etc can be checked, are more receptive to serendipity (e.g., the discovery of Neptune) than other fields. For other fields, in the case of an unexpected result, you're forever doubting the more trivial auxiliaries.
+
+## Novel results?
+
+The more auxiliary hypotheses that are involved, the more blame they will take for the replication failure, and the more the central hypothesis will stand intact?
+
+## Alex's simplification
+
+The two equations have the same first term, so the difference between the credibility of the central and auxiliary hypotheses comes down to how likely the central hypothesis is true but the auxiliary is false given the data, and how likely the auxiliary is true but the central hypothesis is false given the data. 
+
+If we're only interested in the *difference* between the probabilities of the primary and auxiliary hypotheses, we don't have to assume determinism - that the data disprove the compound ha, because $ p(ha|d) $ cancels out when one takes the difference..
+But why would we be interested in which one to believe more in? We're more interested in the difference in how much to downgrade each. For the proponent, their prior is a very high p(h) and a less-high p(a). For the skeptic, they have a less-high p(h) but their p(a) may be equal to the proponent.
+It would be cool if the non-replication yielded much higher belief in the auxiliary than the primary. However, we don't really care how strongly we should believe in the auxiliary. We only care how much change there's been in the probability of the *primary* hypothesis. Having a low belief in the 
+
+$$
+p(h|d) = p(ha|d) + p(h\neg a|d)
+$$
+
+$$
+p(a|d) = p(ha|d) + p(a \neg h|d)
+$$
+
+## Doing some calculations
+
+
+```{r Bayes}
+pHgivenData <- function(likelihood,prior,pData) { #Bayes' rule
+  likelihood * prior / pData
+}
+
+pH = .9 
+pDgivenNotHandA = .9 # = p(d | ~(ha) ) = # = high 
+
+```
+
+Want p(h|d) and p(a|d), or at least their change.
+
+Total probability of hypothesis given the data
+
+p(h|d) = p(ha | d) + p(h~a | d)  #probability sum rule
+
+Unpack the two addends
+
+$$  p(h|d) = p(ha | d) + p(h~a | d) $$
+$$ p(ha | d) = p(d | ha) p(ha) / p(d) $$
+p(d) is maybe not assignable from first principles but 
+
+$$ p(ha | d) = p(d | ha) p(ha) / (  p(d | ha) p(ha) + p(d | ~(ha) ) p( ~(ha) ) $$
+ 
+ $$ p(h~a|d) =  p(d|h~a) p(h~a) / p(d) $$
+How do we rate p(h~a) ?
+How do we rate p(d) ?
+ 
+```{r calc}
+
+pH
+```
+
+3. p(h~a | d = 
+
+4, 
+
+2. .01 * .9*.7 / (  .01*.9*.7 + .95*(1-.9*.7))   =  .018
+
+## Simplified example with only one auxiliary hypothesis
+
+### The Strevens simplification that p(ha|d) = 0
+
+Strevens simplified the equations considerably with the assumption that $$ p(ha|d) = 0 $$
+
+Psychology results are not determinist. But, some are - like the comprehensive failure of the ego depletion RRR.
+
+To arrive at his main conclusions, Strevens assumes that $$ p(ha|d) = 0 $$ , or in other words that the data comprehensively reject the replication hypotheses conjunction. This sometimes occurs with replication attempts involving very large sample sizes, sometimes distributed across many labs.
+
+This results in the  equation plotted in Gershman,  
+That motivates the claims in this article.
+What might go wrong if we didn't assume that?
+
+### No simplification
+
+Non-replication
+Auxiliary hypothesis is whether the participants understood the task. p(a) = .7
+p(h) = .9  
+p(d | ~(ha) ) = high = .5
+
+```{r pressure, echo=FALSE}
+
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+

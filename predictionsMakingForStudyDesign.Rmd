@@ -8,22 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(papaja)
 ```
 
-$$
-p(h | d) = \frac{ 1 - p( a | h ) }{ 1 - p(a|h)p(h) } p(h)
-$$
-
-## Contrasting different probability predictions
-
-When both the $p(h)$ and $p(a)$ are 0.9, the equation predicts what is to me a surprisingly strong downgrade to each, namely down to 
-
-```{r cars}
-ph = .9
-pa = .9
-(1-ph)/(1-pa*ph) *ph
-```
-
-So what we could do is pair up two .9 factories (in the battery scenario), downgrade them, and compare to an undowngraded 0.9 and 0.6, which should win out!
-
 ##  Plots
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4.2, fig.width=4.2,  fig.cap = "How belief in a central hypothesis should be decreased after a replication failure. Specifically, the plots shows the ratio of posterior to prior probability of the central hypothesis h as a function of the prior probability of the auxiliary hypothesis a,  for three different priors for the central hypothesis. Adapted from Strevens (2001)." }
@@ -39,7 +23,11 @@ dg<-expand.grid.df( x, pH )
 library(dplyr)
 dg<- mutate(dg, updateFactor = (1-x)/(1-x*ph))
 
+dg<- mutate(dg, new_ph = ph * updateFactor)
 
+```
+
+```{r, strevensPlot, echo=F}
 library(ggplot2)
 source( file.path("notesCalcs","theme_apa.R") ) #for calcFitDataframes
 
@@ -60,3 +48,106 @@ g<-g+ changedTheme
 #Want to rotate y-axis label but that puts it at the top for some reason + theme(axis.title.y = element_text(angle=0))
 plot(g)
 ```
+### Equation of Strevens
+Where d is data showing a replication failure.
+$$
+p(h | d) = \frac{ 1 - p( a | h ) }{ 1 - p(a|h)p(h) } p(h)
+$$
+
+###
+
+Strevens' graph, as opposed to his equation, is in terms of a ratio relative to the original probability.
+Let's graph the actual equation - the new probability of the hypothesis.
+
+```{r sole}
+g<-ggplot(dg,aes(x=x,y=new_ph,color=ph)) + geom_line() +theme_bw()
+
+g<-g +xlab(expression("p(a|h)"))
+
+plot(g)
+```
+
+Simplify visual appearance of the equation with a instead of p(a|h)  (assumption of independence)
+$$
+h' = \frac{ 1 - a}{ 1 - a*h } h
+$$
+
+## Contrasting specific  predictions
+
+When both the $p(h)$ and $p(a)$ are 0.9, the equation predicts what is to me a surprisingly strong downgrade to each, namely down to 
+
+```{r cars}
+ph = .9
+pa = .9
+(1-pa)/(1-pa*ph) *ph
+```
+
+So what we could do is pair up two .9 factories (in the battery scenario), downgrade them, and compare to an undowngraded 0.9 and 0.6, which should win out!
+
+How many card values are there?
+```{r cards, echo=F}
+cardKinds <- c("Ace","King","Queen","Jack","ten","nine","eight","seven","six","five","four","three","two")
+cardKinds
+length(cardKinds)
+```
+You have two decks of cards and draw one card from each and put it face down.
+Based on the hand you have, you know that your opponent will win if either (or both) of the cards is an ace.
+The dealer looks at the cards of the opponent and says that he wins.
+
+Now you turn over one of your opponent's cards. What is your estimate of the probability that that individual card is an ace?
+
+<!-- You will win the game as long as neither of your cards is a two.
+As long as neither is a two, you will win. -->
+According to Strevens,
+```{r oneAce, echo=F}
+ph = 12/13 #prob not an ace
+pa = 12/13 #prob not an ace
+newProbNotAnAce<- (1-pa)/(1-pa*ph) *ph
+probAnAce<- 1 - newProbNotAnAce
+probAnAce
+```
+In this example, I think that intuitively people will think the probability is something like 50/50, because they know for sure that at least one is an ace.
+
+I don't know how to calculate the limit here as pa and ph goes to 1, but numerically we see the equation gives the right answer of going to 0.5, which is also very intuitive:
+```{r }
+ph = .999 #prob of nearly sure thing
+pa = .999 #prob of nearly sure thing
+newProbNot<- (1-pa)/(1-pa*ph) *ph
+newProb<- 1 - newProbNot
+newProb
+```
+The above
+
+Change the equation to the identical case, which might help with the limits thoughts
+$$
+h' = \frac{ 1 - b}{ 1 - b*b } b
+$$
+
+```{r ,echo=F}
+
+dj<- data.frame(x = seq(0,1,0.01) )
+
+dj<- mutate(dj, newh = x*(1-x)/(1-x*x))
+
+#dg<- mutate(dj, new_ph = ph * updateFactor)
+
+dg$ph <- factor(dg$ph)
+g<-ggplot(dj,aes(x=x,y=newh)) + geom_line() +theme_apa() + 
+
+g<-g +xlab(expression("p(h)"))
+#g + ylab( TeX('$\\alpha^\\beta$') )  
+#g<-g + ylab(    TeX('$ hnew = \frac{ 1 - b}{ 1 - b*b } b $')   )   #always have to add backslash within string to interpret backslash
+g<-g+ylab(    TeX('$b*\\frac{ 1-b }{ 1-b*b$')   ) + ggtitle('Updated probability for two identical-prior hypotheses after experiment failure')
+plot(g)
+```
+
+### Try to factor to analytically show the limit as b -> 1
+=
+$$
+h' = \frac{ b - b^2}{ 1 - b^2 } 
+$$
+$$
+h' = \frac{ b}{ 1 - b^2 } - \frac{ b^2}{ 1 - b^2 }
+$$
+combine the functions by finding the least common denominator (LCD) of the functions on top?
+https://www.dummies.com/education/math/calculus/how-to-find-the-limit-of-a-function-algebraically/
