@@ -48,6 +48,7 @@ g<-g+ changedTheme
 #Want to rotate y-axis label but that puts it at the top for some reason + theme(axis.title.y = element_text(angle=0))
 plot(g)
 ```
+
 ### Equation of Strevens
 Where d is data showing a replication failure.
 $$
@@ -126,28 +127,45 @@ $$
 ```{r ,echo=F}
 
 dj<- data.frame(x = seq(0,1,0.01) )
-
+#Posterior for each of two identical hypotheses
 dj<- mutate(dj, newh = x*(1-x)/(1-x*x))
 
-#dg<- mutate(dj, new_ph = ph * updateFactor)
-
 dg$ph <- factor(dg$ph)
-g<-ggplot(dj,aes(x=x,y=newh)) + geom_line() +theme_apa() + 
+g<-ggplot(dj,aes(x=x,y=newh)) + geom_line() +theme_apa() + xlim(0,1) + ylim(0,1) +
+          geom_abline(lty=2) +  geom_hline(yintercept=0.5,lty=3) #geom_abline(slope=.5,lty=3)
 
 g<-g +xlab(expression("p(h)"))
 #g + ylab( TeX('$\\alpha^\\beta$') )  
 #g<-g + ylab(    TeX('$ hnew = \frac{ 1 - b}{ 1 - b*b } b $')   )   #always have to add backslash within string to interpret backslash
-g<-g+ylab(    TeX('$b*\\frac{ 1-b }{ 1-b*b$')   ) + ggtitle('Updated probability for two identical-prior hypotheses after experiment failure')
+g<-g+ylab(    TeX('$b\\frac{ 1-b }{ 1-b^2$')   ) + ggtitle('Posterior for two identical-prior hypotheses after experiment failure')
 plot(g)
 ```
 
+As seen above, when the probabilities have prios below 0.2, there is very little effect, but as it increases, the penalty is much stronger and it struggles to get to the 0.5 asymptote.
+
 ### Try to factor to analytically show the limit as b -> 1
+
+$$
+h' = \frac{ 1 - b}{ 1 - b*b } b
+$$
 =
 $$
 h' = \frac{ b - b^2}{ 1 - b^2 } 
 $$
+=
 $$
 h' = \frac{ b}{ 1 - b^2 } - \frac{ b^2}{ 1 - b^2 }
 $$
 combine the functions by finding the least common denominator (LCD) of the functions on top?
 https://www.dummies.com/education/math/calculus/how-to-find-the-limit-of-a-function-algebraically/
+
+### Explore dependence? Explore case of two auxiliaries?
+
+### Compare to blocking
+
+In blocking, you take two things that independently could predict the outcome and then you put them together. If either of them predict the outcome, then the outcome happens. Only if both of them don’t, then the outcome doesn’t happen. The classic result is when the outcome occurs and  blocking happens, at least to some extent - you learn little, because the good predictor "explains" the result.
+
+Superficially similar Strevens case is when the experiment outcome prediction is confirmed. But that only happens when both the predictors are true. But the mathematically more analogous case is when the experiment outcome is not confirmed, because that's the case where either of the hypotheses can explain the result (by being false). 
+
+So it does seem like for the animal learning paradigm, the outcome happening is analgous to Streven's predicted result not happening. We can thus model Rescorla's blocking with Strevens' equation by sayng that either predictor (hypothesis) explains
+
